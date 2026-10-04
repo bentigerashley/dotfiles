@@ -1,0 +1,86 @@
+{
+    "layer": "top",
+    "position": "top",
+    "exclusive": true,
+    "height": 27,
+    "spacing": 2,
+
+    "modules-left": ["cpu", "custom/gpu", "memory", "temperature", "custom/power-profile"],
+    "modules-center": ["clock"],
+    "modules-right": ["mpris", "pulseaudio", "battery", "custom/power"],
+
+    "cpu": {
+        "format": "CPU {usage}%",
+        "interval": 2
+    },
+
+    "memory": {
+        "format": "RAM {percentage}%",
+        "tooltip-format": "{used} / {total}GiB",
+        "interval": 2
+    },
+
+    "custom/gpu": {
+        "exec": "sh -c '$HOME/.config/waybar/scripts/gpu_usage.sh'",
+        "interval": 2,
+        "format": "GPU {}",
+        "tooltip-format": "GPU utilization: {}"
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": " {temperatureC}°C",
+        "format-critical": " {temperatureC}°C",
+        "tooltip": true,
+        "tooltip-format": "CPU Temp: {temperatureC}°C",
+        "interval": 2
+    },
+
+    "custom/power-profile": {
+        "exec": "~/.config/waybar/scripts/power-profile.sh status",
+        "return-type": "json",
+        "interval": 3,
+        "tooltip": true,
+        "on-click": "~/.config/waybar/scripts/power-profile.sh cycle"
+    },
+
+    "clock": {
+        "format": "{:%a, %d %b  %H:%M}",
+        "tooltip-format": "<tt>{:%a %d %b %Y}</tt>",
+        "on-click": "hyprctl dispatch hyprexpo:expo toggle"
+    },
+
+    "mpris": {
+        "format": "{title} - {artist}",
+        "format-paused": "{title} - {artist}",
+        "max-length": 50,
+        "tooltip": false,
+        "interval": 2
+    },
+
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "Muted",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "tooltip": false,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+
+    "battery": {
+        "interval": 30,
+        "format": "{icon}  {capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{capacity}% • {timeTo} remaining"
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "~/.config/hypr/scripts/logout-menu.sh"
+    }
+}
